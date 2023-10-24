@@ -185,3 +185,45 @@ trigger PreventAccountDeletionTrigger on Account (before delete) {
 ```
 
 These case studies illustrate different ways to use triggers in Salesforce. Triggers allow you to enforce data validation, automate field population, and prevent data inconsistencies by executing custom logic before or after records are inserted, updated, or deleted. As you become more familiar with triggers, you'll be able to create custom solutions tailored to your organization's specific needs.
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+In Salesforce, `Trigger.new`, `Trigger.old`, `Trigger.newMap`, and `Trigger.oldMap` are essential trigger context variables that allow you to work with records involved in a trigger event, and they are used to access new and old values of records. Here's a comparison of these variables:
+
+**`Trigger.new` and `Trigger.old`:**
+
+1. **`Trigger.new`:**
+   - Contains the new records that are being inserted or updated in the current trigger context.
+   - Used for "before insert," "before update," and "after update" trigger events, and similar scenarios.
+   - Provides access to the new values of the records.
+   - Commonly used for validation and record manipulation.
+
+2. **`Trigger.old`:**
+   - Contains the old records before they were updated in the current trigger context.
+   - Used for "before update," "after update," "before delete," and "after delete" trigger events, and similar scenarios.
+   - Provides access to the old values of the records before they were modified or deleted.
+   - Used for comparing old and new values and for performing specific actions based on changes.
+
+**`Trigger.newMap` and `Trigger.oldMap`:**
+
+1. **`Trigger.newMap`:**
+   - Is a map that allows you to access the new records by their record IDs.
+   - Provides a convenient way to perform record lookups by ID and is often used for record-related logic.
+   - Useful for comparing old and new values efficiently.
+   - Typically used with "before" trigger events, like "before insert" and "before update."
+
+2. **`Trigger.oldMap`:**
+   - Is a map that allows you to access the old records by their record IDs.
+   - Provides a convenient way to perform record lookups by ID.
+   - Used for comparing old and new values efficiently.
+   - Typically used with "after" trigger events, like "after update," "before delete," and "after delete."
+
+**Comparison and Usage:**
+
+- `Trigger.new` and `Trigger.old` are lists that give you direct access to new and old records. These are suitable for performing record-level operations and validations.
+
+- `Trigger.newMap` and `Trigger.oldMap` are maps that are useful when you need to access records by their IDs. They are particularly valuable for comparing old and new values efficiently, especially for "before" and "after" triggers.
+
+- Depending on the specific use case, you may use a combination of these trigger context variables. For example, in a "before update" trigger, you can use both `Trigger.new` and `Trigger.old` to access and compare old and new values for record-level validations. In an "after update" trigger, you may use `Trigger.newMap` to perform actions based on specific records' IDs efficiently.
+
+Understanding when to use each of these trigger context variables is essential for building effective triggers in Salesforce, as it allows you to work with records based on the specific requirements of your business processes and validations.
