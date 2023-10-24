@@ -169,3 +169,127 @@
    System.debug(listString); // Output: "[Alice, Bob, Charlie]"
    ```
 
+
+
+
+
+### When We can Use List In Salesforce Apex:
+
+
+**1. Storing Multiple Records:**
+
+```apex
+List<Contact> contactList = [SELECT Id, Name, Email FROM Contact LIMIT 5];
+```
+
+In this example, we're using a List to store the results of a SOQL query that retrieves the details of the first 5 contacts. Now, you can work with this collection of contacts.
+
+**2. Data Manipulation:**
+
+```apex
+List<Integer> numbers = new List<Integer>{5, 2, 8, 1, 4};
+numbers.sort(); // Sort the list in ascending order
+```
+
+Here, we have a List of integers, and we're using the `sort()` method to arrange the numbers in ascending order.
+
+**3. Iterating Through Data:**
+
+```apex
+List<String> fruits = new List<String>{'Apple', 'Banana', 'Orange', 'Grapes'};
+
+for (String fruit : fruits) {
+    System.debug(fruit);
+}
+```
+
+This code iterates through a List of fruits and prints each fruit name.
+
+**4. Data Transfer and Transformation:**
+
+```apex
+List<Double> temperaturesCelsius = new List<Double>{23.5, 30.2, 15.9};
+List<Double> temperaturesFahrenheit = new List<Double>();
+
+for (Double celsius : temperaturesCelsius) {
+    // Convert Celsius to Fahrenheit
+    temperaturesFahrenheit.add((celsius * 9/5) + 32);
+}
+```
+
+In this example, we use a List to store temperatures in Celsius and then calculate and store the equivalent temperatures in Fahrenheit.
+
+**5. Custom Logic and Validation:**
+
+```apex
+List<Account> accountList = [SELECT Id, Name, AnnualRevenue FROM Account LIMIT 10];
+
+for (Account acc : accountList) {
+    if (acc.AnnualRevenue > 1000000) {
+        acc.Description = 'Large Company';
+    } else {
+        acc.Description = 'Small Company';
+    }
+}
+
+update accountList; // Update the records
+```
+
+Here, we use a List to store Account records and apply custom logic based on the Annual Revenue field.
+
+These examples illustrate the flexibility and utility of Lists in Salesforce Apex. Lists are essential for handling collections of data, whether it's for storing records, iterating through data, data manipulation, or implementing custom business logic.
+
+**6. Batch Processing:**
+
+```apex
+List<Contact> contactList = [SELECT Id, FirstName, LastName FROM Contact LIMIT 1000];
+List<Contact> updatedContacts = new List<Contact>();
+
+for (Contact con : contactList) {
+    // Perform some updates or processing on each contact
+    con.Description = 'Updated';
+    updatedContacts.add(con);
+
+    if (updatedContacts.size() == 200) {
+        // Process and update contacts in batches of 200
+        update updatedContacts;
+        updatedContacts.clear();
+    }
+}
+
+if (!updatedContacts.isEmpty()) {
+    update updatedContacts; // Update any remaining records
+}
+```
+
+This code demonstrates batch processing using Lists. We process contacts in batches to efficiently update a large dataset.
+
+**7. Cross-Object Operations:**
+
+```apex
+List<Opportunity> opportunities = [SELECT Id, Name, Amount, Account.Name FROM Opportunity WHERE StageName = 'Closed Won' LIMIT 10];
+```
+
+In this example, we're using a List to store Opportunity records along with related Account information.
+
+**8. Building Custom Logic:**
+
+```apex
+List<Case> caseList = [SELECT Id, Subject, Status FROM Case WHERE Status = 'New' LIMIT 5];
+
+for (Case c : caseList) {
+    // Implement custom logic based on Case attributes
+    if (c.Subject.contains('Urgent')) {
+        c.Priority = 'High';
+    } else {
+        c.Priority = 'Medium';
+    }
+}
+
+update caseList; // Update the cases with custom logic applied
+```
+
+This code uses a List to store Case records and apply custom logic to set the Priority field.
+
+These additional examples further illustrate how Lists are used in various scenarios in Salesforce Apex, including batch processing, cross-object operations, and custom logic implementation. Lists are a versatile tool for managing and processing collections of data in your Salesforce applications.
+
