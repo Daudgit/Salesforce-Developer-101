@@ -293,3 +293,29 @@ This code uses a List to store Case records and apply custom logic to set the Pr
 
 These additional examples further illustrate how Lists are used in various scenarios in Salesforce Apex, including batch processing, cross-object operations, and custom logic implementation. Lists are a versatile tool for managing and processing collections of data in your Salesforce applications.
 
+--------------------------------------------------------------------------------------------------------------------------------
+
+In Salesforce, you can use Lists to work with both custom and standard objects, as well as sObjects. Lists are a versatile data structure in Apex that can hold collections of records of the same object type (sObject) or other data types like numbers, text, or custom objects. Here's how you can use Lists with various types of objects:
+
+1. **Custom Objects:** You can use Lists to work with records of custom objects that you've created in your Salesforce organization. For example, if you have a custom object called "Custom__c," you can create a List to store and manipulate records of this custom object.
+
+   ```apex
+   List<Custom__c> customRecords = [SELECT Id, Name FROM Custom__c];
+   ```
+
+2. **Standard Objects:** Lists are also commonly used with standard Salesforce objects, such as Accounts, Contacts, Opportunities, and Leads. You can query and manipulate records from these standard objects using Lists.
+
+   ```apex
+   List<Account> accounts = [SELECT Id, Name FROM Account];
+   ```
+
+3. **sObjects:** In Salesforce, an sObject is a generic term that encompasses both custom and standard objects. Lists can store and process records of any sObject type. For example, you can create a List of sObjects and add records of various object types to it.
+
+   ```apex
+   List<sObject> mixedRecords = new List<sObject>();
+   mixedRecords.addAll([SELECT Id, Name FROM Custom__c]);
+   mixedRecords.addAll([SELECT Id, FirstName FROM Contact]);
+   ```
+
+Lists provide a convenient way to work with multiple records, whether they are custom objects, standard objects, or a mix of different sObject types. You can perform operations like querying, iterating, updating, or deleting records within Lists to manage and process your data effectively in Salesforce Apex.
+
