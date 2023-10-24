@@ -201,3 +201,84 @@ Sets in Salesforce Apex are used for a variety of purposes, primarily to manage 
    This code ensures that trigger actions are performed once per Opportunity.
 
 Sets in Salesforce are versatile and efficient for handling data and ensuring uniqueness. They are valuable in scenarios where you need to manage collections of data with specific requirements.
+
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+In Salesforce Apex, Sets can be used with both standard objects, custom objects, and sObjects to efficiently manage and manipulate data. Sets are versatile data structures that can be applied to various use cases.
+
+**Using Sets with Standard and Custom Objects:**
+
+You can use Sets with standard and custom objects to perform tasks like de-duplication, membership testing, and data processing. Here are examples using both a standard object (Account) and a custom object (CustomObject__c):
+
+**With a Standard Object (Account):**
+
+```apex
+// Create a Set to store Account IDs
+Set<Id> accountIds = new Set<Id>();
+
+// Query a list of Account records
+List<Account> accounts = [SELECT Id FROM Account LIMIT 10];
+
+// Add Account IDs to the Set
+for (Account acc : accounts) {
+    accountIds.add(acc.Id);
+}
+
+// Check if a specific Account ID exists in the Set
+Id accountIdToCheck = '0010b00000abcdefg';
+if (accountIds.contains(accountIdToCheck)) {
+    System.debug('Account exists in the Set.');
+}
+```
+
+**With a Custom Object (CustomObject__c):**
+
+```apex
+// Create a Set to store CustomObject IDs
+Set<Id> customObjectIds = new Set<Id>();
+
+// Query a list of CustomObject__c records
+List<CustomObject__c> customObjects = [SELECT Id FROM CustomObject__c LIMIT 10];
+
+// Add CustomObject IDs to the Set
+for (CustomObject__c customObj : customObjects) {
+    customObjectIds.add(customObj.Id);
+}
+
+// Check if a specific CustomObject ID exists in the Set
+Id customObjectIdToCheck = 'a0S0b00000abcdefg';
+if (customObjectIds.contains(customObjectIdToCheck)) {
+    System.debug('CustomObject exists in the Set.');
+}
+```
+
+**Using Sets with sObjects:**
+
+Sets are also valuable when working with generic sObjects (which can represent any object type, standard or custom) to handle data dynamically. Here's an example of using a Set with sObjects:
+
+```apex
+// Create a Set to store sObjects
+Set<SObject> sObjectSet = new Set<SObject>();
+
+// Query a list of sObjects dynamically (e.g., based on user input)
+String objectTypeToQuery = 'Account';
+String query = 'SELECT Id FROM ' + objectTypeToQuery + ' LIMIT 10';
+List<SObject> sObjects = Database.query(query);
+
+// Add the queried sObjects to the Set
+sObjectSet.addAll(sObjects);
+
+// Check if a specific sObject exists in the Set
+SObject sObjToCheck = [SELECT Id FROM Account LIMIT 1];
+if (sObjectSet.contains(sObjToCheck)) {
+    System.debug('sObject exists in the Set.');
+}
+```
+
+**Additional Notes:**
+
+- Sets automatically deduplicate data, so you can use them to ensure unique values.
+- Sets are particularly useful when working with large data sets, as they provide efficient membership testing.
+
+Remember to query and work with specific object fields as needed for your use case. Sets are powerful for data management and processing in Salesforce Apex, and you can adapt them to various situations with standard, custom, or dynamic object types.
