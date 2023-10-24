@@ -161,3 +161,80 @@ In Salesforce Apex, Maps are commonly used in various scenarios to manage key-va
    This can be helpful when working with dynamic configurations.
 
 Maps are an essential data structure in Salesforce Apex, providing flexibility and efficiency in data management. They are versatile tools that can be applied to various use cases, including data aggregation, data transformation, error handling, indexing, and more.
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+**1. Using Maps with Standard Objects (Account):**
+
+```apex
+Map<Id, Account> accountMap = new Map<Id, Account>();
+
+// Query a list of Account records
+List<Account> accounts = [SELECT Id, Name FROM Account LIMIT 5];
+
+// Populate the Map with Account records using their Id as the key
+for (Account acc : accounts) {
+    accountMap.put(acc.Id, acc);
+}
+
+// Access a specific Account record using its Id
+Id accountIdToRetrieve = accounts[0].Id;
+Account retrievedAccount = accountMap.get(accountIdToRetrieve);
+System.debug('Account Name: ' + retrievedAccount.Name);
+```
+
+In this example, a Map is used to store Account records, and you can retrieve specific Accounts by their Id.
+
+**2. Using Maps with Custom Objects (CustomObject__c):**
+
+```apex
+Map<Id, CustomObject__c> customObjectMap = new Map<Id, CustomObject__c>();
+
+// Query a list of CustomObject__c records
+List<CustomObject__c> customObjects = [SELECT Id, CustomField__c FROM CustomObject__c LIMIT 5];
+
+// Populate the Map with CustomObject__c records using their Id as the key
+for (CustomObject__c obj : customObjects) {
+    customObjectMap.put(obj.Id, obj);
+}
+
+// Access a specific CustomObject__c record using its Id
+Id objectIdToRetrieve = customObjects[0].Id;
+CustomObject__c retrievedObject = customObjectMap.get(objectIdToRetrieve);
+System.debug('Custom Field Value: ' + retrievedObject.CustomField__c);
+```
+
+In this case, a Map is used to store CustomObject__c records, and you can retrieve specific records by their Id.
+
+**3. Using Maps with sObjects (Dynamic):**
+
+```apex
+Map<Id, SObject> sObjectMap = new Map<Id, SObject>();
+
+// Query a list of sObjects dynamically (e.g., based on user input)
+String objectTypeToQuery = 'Account';
+String query = 'SELECT Id, Name FROM ' + objectTypeToQuery + ' LIMIT 5';
+List<SObject> sObjects = Database.query(query);
+
+// Populate the Map with sObjects using their Id as the key
+for (SObject sObj : sObjects) {
+    sObjectMap.put(sObj.Id, sObj);
+}
+
+// Access a specific sObject record using its Id
+Id sObjectIdToRetrieve = sObjects[0].Id;
+SObject retrievedSObject = sObjectMap.get(sObjectIdToRetrieve);
+String objectName = (String)retrievedSObject.get('Name');
+System.debug('Object Name: ' + objectName);
+```
+
+In this example, a Map is used to store sObjects dynamically, allowing you to retrieve specific records by their Id or access fields dynamically.
+
+These examples demonstrate how to use Maps with standard objects, custom objects, and sObjects in Salesforce Apex. Maps are powerful tools for managing and accessing data efficiently in various contexts.
