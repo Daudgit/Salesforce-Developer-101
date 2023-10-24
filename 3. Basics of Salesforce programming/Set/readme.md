@@ -119,4 +119,85 @@
     Set<String> names = new Set<String>{'Alice', 'Bob', 'Charlie', 'David'};
     names.retainAll(new Set<String>{'Bob', 'Charlie'});
     ```
+----------------------------------------------------------------------------------------------------------------------------------
 
+Sets in Salesforce Apex are used for a variety of purposes, primarily to manage and manipulate data efficiently. Here are some common scenarios where you can use Sets in Salesforce, along with code examples:
+
+1. **Removing Duplicates:** Use Sets to eliminate duplicate records or values from a list of data.
+
+   ```apex
+   List<String> names = new List<String>{'Alice', 'Bob', 'Alice', 'Charlie', 'Bob'};
+   Set<String> uniqueNames = new Set<String>(names);
+   ```
+
+   In this example, the Set `uniqueNames` will contain only unique values ('Alice', 'Bob', 'Charlie').
+
+2. **Checking for Uniqueness:** Sets are helpful for checking whether a value is unique within a collection.
+
+   ```apex
+   Set<String> existingEmails = new Set<String>();
+   String newEmail = 'user@example.com';
+
+   if (!existingEmails.contains(newEmail)) {
+       existingEmails.add(newEmail);
+   }
+   ```
+
+   This code ensures that `newEmail` is added to `existingEmails` only if it's not already present.
+
+3. **Membership Testing:** Use Sets to quickly check if a value exists in a collection.
+
+   ```apex
+   Set<String> validCountries = new Set<String>{'USA', 'Canada', 'UK', 'Australia'};
+   String userCountry = 'UK';
+
+   if (validCountries.contains(userCountry)) {
+       // Perform country-specific logic
+   }
+   ```
+
+   This code tests whether `userCountry` is in the set of `validCountries`.
+
+4. **De-Duping SObject Records:** You can use Sets to remove duplicate SObject records based on specific fields.
+
+   ```apex
+   List<Contact> contacts = [SELECT Id, Email FROM Contact];
+   Set<String> uniqueEmails = new Set<String>();
+   List<Contact> uniqueContacts = new List<Contact>();
+
+   for (Contact con : contacts) {
+       if (!uniqueEmails.contains(con.Email)) {
+           uniqueEmails.add(con.Email);
+           uniqueContacts.add(con);
+       }
+   }
+   ```
+
+   This code retrieves Contacts from Salesforce and stores only the unique records based on the "Email" field.
+
+5. **Sorting Data:** Sets automatically sort elements, which can be useful when you need an ordered collection.
+
+   ```apex
+   Set<Integer> numbers = new Set<Integer>{5, 2, 8, 1, 4};
+   List<Integer> sortedNumbers = new List<Integer>(numbers);
+   sortedNumbers.sort();
+   ```
+
+   In this example, `sortedNumbers` will contain the elements in ascending order.
+
+6. **Ensuring Unique Values in Trigger Context:** When working with triggers in Salesforce, you can use Sets to ensure that certain actions are taken only once, avoiding duplication.
+
+   ```apex
+   Set<Id> processedIds = new Set<Id>();
+
+   for (Opportunity opp : Trigger.new) {
+       if (!processedIds.contains(opp.Id)) {
+           // Perform actions
+           processedIds.add(opp.Id);
+       }
+   }
+   ```
+
+   This code ensures that trigger actions are performed once per Opportunity.
+
+Sets in Salesforce are versatile and efficient for handling data and ensuring uniqueness. They are valuable in scenarios where you need to manage collections of data with specific requirements.
